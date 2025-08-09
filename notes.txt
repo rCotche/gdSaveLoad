@@ -1,0 +1,78 @@
+https://www.youtube.com/watch?v=43BZsLZheA4
+
+git clone --branch start --single-branch https://github.com/godotneers/saving-loading-video.git
+
+////////////////////////////////
+SAVE
+var file = FileAccess.open("user://savegame.data", FileAccess.WRITE)
+
+#store_var c'est une fonction de FileAccess
+#qui permet d'enregistrer une variable dans le fichier
+file.store_var(player.global_position)
+
+LOAD
+var file = FileAccess.open("user://savegame.json", FileAccess.READ)
+
+player.global_position = file.get_var()
+
+8:50
+store_var l'ordre à son importance
+le 1er get_var va regarder le 1er enregistrement
+le 2e get_var va regarder le 2e enregistrement
+…
+
+
+////////////////////////////////
+
+Format JSON chapter dans la video
+
+SAVE
+var file = FileAccess.open("user://savegame.json", FileAccess.WRITE)
+
+var saved_data = {}
+saved_data["player_global_position:x"] = player.global_position.x
+saved_data["player_global_position:y"] = player.global_position.y
+saved_data["player_health"] = player.health
+	
+#dictionary to json
+var json  = JSON.stringify(saved_data)
+	
+#ecrire le json dans un fichier
+file.store_string(json)
+file.close()
+
+LOAD
+var file = FileAccess.open("user://savegame.json", FileAccess.READ)
+
+#get_as_text : lis tout le fichier, tout son contenu est convertit en string
+var json = file.get_as_text()
+	
+#string to dictionary
+var saved_data = JSON.parse_string(json)
+	
+player.health = saved_data["player_health"]
+player.global_position.x = saved_data["player_global_position:x"]
+player.global_position.y = saved_data["player_global_position:y"]
+
+////////////////////////////////
+
+Format dictionaries chapter dans la video
+
+SAVE
+var file = FileAccess.open("user://savegame.data", FileAccess.WRITE)
+	
+var saved_data = {}
+saved_data["player_global_position"] = player.global_position
+saved_data["player_health"] = player.health
+	
+file.store_var(saved_data)
+file.close()
+
+LOAD
+var file = FileAccess.open("user://savegame.data", FileAccess.READ)
+	
+var saved_data =file.get_var()
+	
+player.health = saved_data["player_health"]
+player.global_position = saved_data["player_global_position"]
+file.close()
