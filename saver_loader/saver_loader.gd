@@ -4,20 +4,14 @@ extends Node
 @onready var player: Player = %Player
 
 func save_game():
-	var file = FileAccess.open("user://savegame.data", FileAccess.WRITE)
+	var saved_game:SavedGame = SavedGame.new()
+	saved_game.player_health = player.health
+	saved_game.player_position = player.global_position
 	
-	var saved_data = {}
-	saved_data["player_global_position"] = player.global_position
-	saved_data["player_health"] = player.health
-	
-	file.store_var(saved_data)
-	file.close()
+	ResourceSaver.save(saved_game, "user://savegame.tres")
 
 func load_game():
-	var file = FileAccess.open("user://savegame.data", FileAccess.READ)
-
-	var saved_data =file.get_var()
+	var save_game = load("user://savegame.tres") as SavedGame
 	
-	player.health = saved_data["player_health"]
-	player.global_position = saved_data["player_global_position"]
-	file.close()
+	player.health = save_game.player_health
+	player.global_position = save_game.player_position
