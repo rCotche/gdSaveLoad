@@ -8,6 +8,15 @@ extends CharacterBody2D
 var _target:Node2D
 var _dying:bool = false
 
+func on_save_game(saved_data: Array[SavedData]) -> void:
+	#check l'etat du fish, c'est moi ajoute cette ligne, c'est pas integree
+	if _dying:
+		return
+	
+	var my_data = SavedData.new()
+	my_data.position = global_position
+	my_data.scene_path = "res://fish/fish.tscn"
+
 func _physics_process(_delta):
 	if not is_instance_valid(_target) or _dying:
 		return

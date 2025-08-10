@@ -132,7 +132,7 @@ scale_max = 0.5
 scale_curve = SubResource("CurveTexture_svkju")
 color_ramp = SubResource("GradientTexture1D_4yff5")
 
-[node name="Fish" type="CharacterBody2D" groups=["enemy"]]
+[node name="Fish" type="CharacterBody2D" groups=["enemy", "fish"]]
 collision_layer = 4
 collision_mask = 3
 script = ExtResource("1_6ahu8")
@@ -162,18 +162,18 @@ shape = SubResource("CircleShape2D_2egbw")
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true
 libraries = {
-"": SubResource("AnimationLibrary_i74i6")
+&"": SubResource("AnimationLibrary_i74i6")
 }
 
 [node name="ExplosionParticles" type="GPUParticles2D" parent="."]
 unique_name_in_owner = true
 emitting = false
 amount = 250
-process_material = SubResource("ParticleProcessMaterial_5kgx0")
 texture = ExtResource("4_a60dk")
 lifetime = 2.0
 one_shot = true
 explosiveness = 0.88
 fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_5kgx0")
 
 [connection signal="body_entered" from="DetectionArea" to="." method="_on_detection_area_body_entered"]

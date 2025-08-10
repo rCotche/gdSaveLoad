@@ -7,7 +7,7 @@ Be sure to also check the [article on saved game compatibility](https://raw.gith
 
 ## Support Him
 
-If this video and the example code were helpful to you, please consider supporting me on [Ko-fi](https://ko-fi.com/derkork). Thank you very much!
+If this video and the example code were helpful to you, please consider supporting him on [Ko-fi](https://ko-fi.com/derkork). Thank you very much!
 
 ## License
 
