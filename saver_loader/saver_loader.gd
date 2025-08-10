@@ -9,10 +9,11 @@ func save_game():
 	saved_game.player_health = player.health
 	saved_game.player_position = player.global_position
 	
-	#parcours les nodes qui sont dasn le groupe fish dans la scene
-	for fish in get_tree().get_nodes_in_group("fish"):
-		#append : ajoute l'element à la fin de l'Array
-		saved_game.fish_positions.append(fish.global_position)
+	var saved_data: Array[SavedData] = []
+	#la fonction on_save_game sera appelé sur
+	#tous les nodes dans la tree qui appartienent au groupe game_events
+	get_tree().call_group("game_events", "on_save_game", saved_data)
+	saved_game.saved_data = saved_data
 	
 	ResourceSaver.save(saved_game, "user://savegame.tres")
 
@@ -23,15 +24,13 @@ func load_game():
 	player.global_position = saved_game.player_position
 	
 	#CLEAR
-	#parcours les nodes qui sont dasn le groupe fish dans la scene
-	for fish in get_tree().get_nodes_in_group("fish"):
-		#Bonne pratique :  d'abord remove le node, puis queue free
-		fish.get_parent().remove_child(fish)
-		fish.queue_free()
+	get_tree().call_group("game_events", "on_before_load_game")
 	
-	for position in saved_game.fish_positions:
-		var fish = preload("res://fish/fish.tscn")
-		var new_fish = fish.instantiate()
+	for item in saved_game.saved_data:
+		var scene = load(item.scene_path) as PackedScene
+		var restored_node = scene.instantiate()
 		
-		world_root.add_child(new_fish)
-		new_fish.global_position = position
+		world_root.add_child(restored_node)
+		
+		if restored_node.has_method("on_load_game"):
+			restored_node.on_load_game(item)

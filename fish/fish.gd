@@ -15,7 +15,17 @@ func on_save_game(saved_data: Array[SavedData]) -> void:
 	
 	var my_data = SavedData.new()
 	my_data.position = global_position
-	my_data.scene_path = "res://fish/fish.tscn"
+	#bonne pratique : ne pas avoir de chemein absolu
+	my_data.scene_path = scene_file_path #"res://fish/fish.tscn"
+	
+	saved_data.append(my_data)
+
+func on_before_load_game () -> void:
+	get_parent().remove_child(self)
+	queue_free()
+
+func on_load_game(saved_data: SavedData) -> void:
+	global_position = saved_data.position
 
 func _physics_process(_delta):
 	if not is_instance_valid(_target) or _dying:
