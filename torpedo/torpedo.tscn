@@ -207,17 +207,17 @@ color_ramp = SubResource("GradientTexture1D_5b75f")
 radius = 12.9763
 height = 89.9941
 
-[node name="Ammo" type="Node2D"]
+[node name="Ammo" type="Node2D" groups=["game_events"]]
 script = ExtResource("1_ywxoy")
 
 [node name="MovementParticles" type="GPUParticles2D" parent="."]
 unique_name_in_owner = true
 position = Vector2(-45, 1)
 amount = 80
-process_material = SubResource("ParticleProcessMaterial_ph3u3")
 texture = ExtResource("2_r22n7")
 lifetime = 2.0
 fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_ph3u3")
 
 [node name="Ammo" type="Sprite2D" parent="."]
 position = Vector2(0, 2)
@@ -227,7 +227,7 @@ texture = ExtResource("3_pnlwx")
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true
 libraries = {
-"": SubResource("AnimationLibrary_ycy2u")
+&"": SubResource("AnimationLibrary_ycy2u")
 }
 
 [node name="ExplosionParticles" type="GPUParticles2D" parent="."]
@@ -235,12 +235,12 @@ unique_name_in_owner = true
 visible = false
 emitting = false
 amount = 250
-process_material = SubResource("ParticleProcessMaterial_g7mco")
 texture = ExtResource("2_r22n7")
 lifetime = 2.0
 one_shot = true
 explosiveness = 0.88
 fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_g7mco")
 
 [node name="DetectionArea" type="Area2D" parent="."]
 collision_layer = 0

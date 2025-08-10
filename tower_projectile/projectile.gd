@@ -8,6 +8,30 @@ var direction:Vector2 = Vector2.ONE
 
 var _dying:bool = false
 
+func on_save_game(saved_data: Array[SavedData]) -> void:
+	#check l'etat du fish, c'est moi ajoute cette ligne, c'est pas integree
+	if _dying:
+		return
+	
+	var my_data = SavedTorpedoData.new()
+	my_data.position = global_position
+	#bonne pratique : ne pas avoir de chemein absolu
+	my_data.scene_path = scene_file_path #"res://fish/fish.tscn"
+	my_data.direction = direction
+	
+	saved_data.append(my_data)
+
+func on_before_load_game () -> void:
+	get_parent().remove_child(self)
+	queue_free()
+
+func on_load_game(saved_data: SavedData) -> void:
+	#SavedTorpedoData est une classe fille de SavedData
+	var my_data:SavedTorpedoData = saved_data as SavedTorpedoData
+	global_position = my_data.position
+	direction = my_data.direction
+	
+	look_at(global_position + direction)
 
 func _ready():
 	direction = direction.normalized()
@@ -41,5 +65,3 @@ func _on_detection_area_body_entered(body):
 	if body.has_method("take_damage"):
 		body.take_damage(damage)
 		explode()
-
-

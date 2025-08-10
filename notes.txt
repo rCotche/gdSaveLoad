@@ -163,3 +163,11 @@ for item in saved_game.saved_data:
 		
 	if restored_node.has_method("on_load_game"):
 		restored_node.on_load_game(item)
+
+////////////////////////////////
+
+Format extending the generalized approach chapter dans la video
+
+SAVE
+
+LOAD
