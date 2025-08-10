@@ -28,7 +28,7 @@ project/assembly_name="loading_saving_video"
 
 [editor_plugins]
 
-enabled=PackedStringArray()
+enabled=PackedStringArray("res://addons/safe_resource_loader/plugin.cfg")
 
 [input]
 

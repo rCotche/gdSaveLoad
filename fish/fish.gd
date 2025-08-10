@@ -13,10 +13,11 @@ func on_save_game(saved_data: Array[SavedData]) -> void:
 	if _dying:
 		return
 	
-	var my_data = SavedData.new()
+	var my_data = SavedFishData.new()
 	my_data.position = global_position
 	#bonne pratique : ne pas avoir de chemein absolu
 	my_data.scene_path = scene_file_path #"res://fish/fish.tscn"
+	my_data.scale = scale
 	
 	saved_data.append(my_data)
 
@@ -25,7 +26,12 @@ func on_before_load_game () -> void:
 	queue_free()
 
 func on_load_game(saved_data: SavedData) -> void:
+	#Pour la compatibilité des versionq
 	global_position = saved_data.position
+	
+	if saved_data is SavedFishData:
+		var my_data:SavedFishData = saved_data as SavedFishData
+		scale = my_data.scale
 
 func _physics_process(_delta):
 	if not is_instance_valid(_target) or _dying:
@@ -50,7 +56,10 @@ func _physics_process(_delta):
 
 
 func take_damage(_damage:float):
-	_die()
+	if scale.x < 1:
+		_die()
+	else:
+		scale = Vector2(0.5,0.5)
 		
 		
 func _die():

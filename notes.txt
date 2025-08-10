@@ -171,3 +171,34 @@ Format extending the generalized approach chapter dans la video
 SAVE
 
 LOAD
+
+////////////////////////////////
+
+Format save game compatibility chapter dans la video
+
+Quand on ajoute une nouvelle mecanique verifier si le chargement fonctionne toujours
+
+////////////////////////////////
+
+Format save game security chapter dans la video
+
+Toujours verifier les data avant de load
+
+fichier on peut inject code
+
+github
+godot re tool contre du binary file
+gdke contre de l'encryption
+
+verifier si le fichier de sauvegarde ne contient pas des paterne de script mailicieux
+
+asset lib > safe resource loader > download > uncheck example folder > install > ok
+project > project settings > plugins > enable safe resource loader
+reload project
+
+LOAD
+
+old line :
+var saved_game = load("user://savegame.tres") as SavedGame
+updated line
+var saved_game = SafeResourceLoader.load("user://savegame.tres") as SavedGame

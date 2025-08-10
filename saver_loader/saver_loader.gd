@@ -18,10 +18,13 @@ func save_game():
 	ResourceSaver.save(saved_game, "user://savegame.tres")
 
 func load_game():
-	var saved_game = load("user://savegame.tres") as SavedGame
+	var saved_game = SafeResourceLoader.load("user://savegame.tres") as SavedGame
 	
+	if saved_game == null:
+		#print("save file not safe")
+		return
 	player.health = saved_game.player_health
-	player.global_position = saved_game.player_position
+	player.global_position = min(saved_game.player_position, 200)
 	
 	#CLEAR
 	get_tree().call_group("game_events", "on_before_load_game")
